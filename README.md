@@ -72,7 +72,7 @@ friends-forever/
 ├── friends_forever_flutter/       # Flutter project for the app
 └── friends_forever_server/        # ServerPod backend project
 └── friends_forever_client/        # ServerPod client project
-
+```
 ---
 
 ## 📄 License
