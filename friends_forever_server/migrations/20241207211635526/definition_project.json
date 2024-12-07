@@ -1,0 +1,19 @@
+{
+  "moduleName": "friends_forever",
+  "tables": [],
+  "installedModules": [
+    {
+      "module": "serverpod",
+      "version": "20240516151843329"
+    },
+    {
+      "module": "serverpod_auth",
+      "version": "20240520102713718"
+    },
+    {
+      "module": "friends_forever",
+      "version": "20241207062319093"
+    }
+  ],
+  "migrationApiVersion": 1
+}
