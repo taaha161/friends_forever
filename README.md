@@ -80,6 +80,6 @@ This project is licensed under the MIT License. See the LICENSE file for details
 📢 Follow the Journey
 I’m building this app in public to share my progress, learnings, and challenges. Follow my updates here:
 
-LinkedIn: www.linkedin.com/in/taaha-rauf
-Medium: https://medium.com/@pakitaaha
+[LinkedIn](https://linkedin.com/in/taaha-rauf)
+[Medium](https://medium.com/@pakitaaha)
 Let’s create something meaningful together! 🌟
