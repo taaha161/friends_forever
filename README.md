@@ -73,9 +73,12 @@ friends-forever/
 └── friends_forever_server/        # ServerPod backend project
 └── friends_forever_client/        # ServerPod client project
 
+---
 
-📄 License
+## 📄 License
 This project is licensed under the MIT License. See the LICENSE file for details.
+
+---
 
 📢 Follow the Journey
 I’m building this app in public to share my progress, learnings, and challenges. Follow my updates here:
