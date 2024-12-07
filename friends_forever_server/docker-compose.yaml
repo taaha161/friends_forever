@@ -1,0 +1,56 @@
+version: '3.7'
+
+services:
+  # Development services
+  postgres:
+    image: postgres:16.3
+    ports:
+      - '8090:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: friends_forever
+      POSTGRES_PASSWORD: "3F677fll3GtNl7ebAee2AbhFsA0rghzb"
+    volumes:
+      - friends_forever_data:/var/lib/postgresql/data
+    profiles:
+      - '' # Default profile
+      - dev
+  redis:
+    image: redis:6.2.6
+    ports:
+      - '8091:6379'
+    command: redis-server --requirepass "-uBfIdC1MceB96ayUdmlHCSmXLaGEG8R"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    profiles:
+      - '' # Default profile
+      - dev
+
+  # Test services
+  postgres_test:
+    image: postgres:16.3
+    ports:
+      - '9090:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: friends_forever_test
+      POSTGRES_PASSWORD: "C9syyHM9oMAodZ6jvbcIGQ9dOWY4yNaM"
+    volumes:
+      - friends_forever_test_data:/var/lib/postgresql/data
+    profiles:
+      - '' # Default profile
+      - test
+  redis_test:
+    image: redis:6.2.6
+    ports:
+      - '9091:6379'
+    command: redis-server --requirepass "aJRMYGjN_aA4xmq_NQd4nxOgUUZ3t0ZY"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    profiles:
+      - '' # Default profile
+      - test
+
+volumes:
+  friends_forever_data:
+  friends_forever_test_data:
