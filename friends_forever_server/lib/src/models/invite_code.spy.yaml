@@ -1,0 +1,13 @@
+class: InviteCode
+table: invite_code
+fields:
+    userInfo: module:auth:UserInfo?, relation
+    code: String
+indexes:
+  inviteCode:
+    fields: code
+    unique: true
+  user_info_id:
+    fields: userInfoId
+    unique: true
+    

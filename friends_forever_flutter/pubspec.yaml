@@ -25,8 +25,8 @@ dependencies:
   flutter:
     sdk: flutter
   serverpod_flutter: 2.2.2
-  serverpod_auth_email_flutter: ^2.2.2
-  serverpod_auth_shared_flutter: ^2.2.2
+  serverpod_auth_email_flutter: 2.2.2
+  serverpod_auth_shared_flutter: 2.2.2
   friends_forever_client:
     path: ../friends_forever_client
 

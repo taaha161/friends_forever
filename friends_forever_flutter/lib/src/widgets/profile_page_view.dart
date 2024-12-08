@@ -8,28 +8,38 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        ListTile(
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          leading: CircularUserImage(
-            userInfo: sessionManager.signedInUser,
-            size: 42,
-          ),
-          title: Text(sessionManager.signedInUser!.userName!),
-          subtitle: Text(sessionManager.signedInUser!.email ?? ''),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: ElevatedButton(
-            onPressed: () {
-              sessionManager.signOutDevice();
-            },
-            child: const Text('Sign out'),
-          ),
-        ),
-      ],
-    );
+    return FutureBuilder(
+        future: client.user.inviteCode(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return ListView(
+            children: [
+              ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                leading: CircularUserImage(
+                  userInfo: sessionManager.signedInUser,
+                  size: 42,
+                ),
+                title: Text(snapshot.data!.userInfo!.userName ?? ''),
+                subtitle: Text(snapshot.data!.userInfo!.email ?? ''),
+                trailing: Text('Invite Code: ${snapshot.data!.code}'),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: ElevatedButton(
+                  onPressed: () {
+                    sessionManager.signOutDevice();
+                  },
+                  child: const Text('Sign out'),
+                ),
+              ),
+            ],
+          );
+        });
   }
 }
