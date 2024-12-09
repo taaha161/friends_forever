@@ -15,8 +15,8 @@ class UserEndpoint extends Endpoint {
           include: User.include(
               userInfo: UserInfo.include(),
               friends: Friends.includeList(
-                  // limit: 10,
-                  // offset: (page - 1) * 10,
+                  limit: 10,
+                  offset: (page - 1) * 10,
                   include: Friends.include(
                       user: User.include(userInfo: UserInfo.include()),
                       friend: User.include(userInfo: UserInfo.include()))),
@@ -25,21 +25,4 @@ class UserEndpoint extends Endpoint {
     }
     return null;
   }
-
-  // Future<List<Friends>?> fetchFriends(Session session, {int page = 1}) async {
-  //   final authenticatedInfo = await session.authenticated;
-  //   if (authenticatedInfo != null) {
-
-  //     final friendList = await Friends.db.find(session,
-  //         where: (row) => row.userInfoId.equals(authenticatedInfo.userId),
-  //         limit: 10,
-  //         offset: (page - 1) * 10,
-  //         include: Friends.include(
-  //           friendInfo: UserInfo.includeList()
-  //         )
-  //         );
-
-  //   }
-  //   return null;
-  // }
 }
