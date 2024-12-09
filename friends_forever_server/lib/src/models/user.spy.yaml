@@ -1,0 +1,10 @@
+class: User
+table: user
+fields:
+    userInfo: module:auth:UserInfo?, relation 
+    friends: List<Friends>?, relation (name=friend_list)
+    inviteCode: InviteCode?, relation (onDelete=Cascade)
+indexes:
+    serverpod_user_info_index:
+        fields: userInfoId
+        unique: true

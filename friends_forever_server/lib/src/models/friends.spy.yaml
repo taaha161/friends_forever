@@ -1,0 +1,13 @@
+class: Friends
+table: friends
+fields:
+    user: User?, relation 
+    friend: User?, relation (name=friend_list,  onDelete=Cascade)
+    createdAt: DateTime
+    updatedAt: DateTime
+    deletedAt: DateTime?
+indexes:
+    friend_list_index:
+        fields: userId,friendId
+        unique: true
+    

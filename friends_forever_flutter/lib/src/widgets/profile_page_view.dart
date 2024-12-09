@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:friends_forever_client/friends_forever_client.dart';
 import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart';
 
 import 'package:friends_forever_flutter/src/serverpod_client.dart';
@@ -9,8 +10,8 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: client.user.inviteCode(),
-        builder: (context, snapshot) {
+        future: client.user.get(page: 0),
+        builder: (context, AsyncSnapshot<User?> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: CircularProgressIndicator(),
@@ -25,9 +26,12 @@ class AccountPage extends StatelessWidget {
                   userInfo: sessionManager.signedInUser,
                   size: 42,
                 ),
-                title: Text(snapshot.data!.userInfo!.userName ?? ''),
-                subtitle: Text(snapshot.data!.userInfo!.email ?? ''),
-                trailing: Text('Invite Code: ${snapshot.data!.code}'),
+                title: snapshot.data == null
+                    ? Text("User not found")
+                    : Text(snapshot.data!.userInfo!.userIdentifier),
+                subtitle: Text(snapshot.data!.userInfo!.email ?? ""),
+                trailing: Text(
+                    'Invite Code: ${snapshot.data!.inviteCode!.code} \n ${snapshot.data!.friends![0].user!.userInfo!.userName}'),
               ),
               Padding(
                 padding: const EdgeInsets.all(16),

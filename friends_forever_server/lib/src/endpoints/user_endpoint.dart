@@ -6,15 +6,40 @@ class UserEndpoint extends Endpoint {
   @override
   bool get requireLogin => true;
 
-  Future<InviteCode?> inviteCode(Session session) async {
+  Future<User?> get(Session session, {int page = 0}) async {
     final authenticatedInfo = await session.authenticated;
 
     if (authenticatedInfo != null) {
-      final inviteCode = InviteCode.db.findFirstRow(session,
-          where: (p0) => p0.userInfoId.equals(authenticatedInfo.userId),
-          include: InviteCode.include(userInfo: UserInfo.include()));
-      return inviteCode;
+      final user = await User.db.findFirstRow(session,
+          where: (row) => row.userInfoId.equals(authenticatedInfo.userId),
+          include: User.include(
+              userInfo: UserInfo.include(),
+              friends: Friends.includeList(
+                  // limit: 10,
+                  // offset: (page - 1) * 10,
+                  include: Friends.include(
+                      user: User.include(userInfo: UserInfo.include()),
+                      friend: User.include(userInfo: UserInfo.include()))),
+              inviteCode: InviteCode.include()));
+      return user;
     }
     return null;
   }
+
+  // Future<List<Friends>?> fetchFriends(Session session, {int page = 1}) async {
+  //   final authenticatedInfo = await session.authenticated;
+  //   if (authenticatedInfo != null) {
+
+  //     final friendList = await Friends.db.find(session,
+  //         where: (row) => row.userInfoId.equals(authenticatedInfo.userId),
+  //         limit: 10,
+  //         offset: (page - 1) * 10,
+  //         include: Friends.include(
+  //           friendInfo: UserInfo.includeList()
+  //         )
+  //         );
+
+  //   }
+  //   return null;
+  // }
 }

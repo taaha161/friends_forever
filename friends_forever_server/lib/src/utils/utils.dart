@@ -25,8 +25,21 @@ Future<void> onUserCreated(Session session, auth.UserInfo userInfo) async {
     randomCode = _generateRandomString(5);
   }
   if (userInfo.id != null) {
-    final inviteCode = InviteCode(userInfoId: userInfo.id!, code: randomCode);
-    await InviteCode.db.insertRow(session, inviteCode);
+    final inviteCode = await InviteCode.db.insertRow(
+        session, InviteCode(userInfoId: userInfo.id!, code: randomCode));
+
+    final user = await User.db.insertRow(
+        session,
+        User(
+          userInfoId: userInfo.id!,
+          inviteCodeId: inviteCode.id!,
+        ));
+    final friend = Friends(
+        userId: user.id!,
+        friendId: 3,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now());
+    await Friends.db.insertRow(session, friend);
   }
 }
 

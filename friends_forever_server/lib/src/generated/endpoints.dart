@@ -59,14 +59,23 @@ class Endpoints extends _i1.EndpointDispatch {
       name: 'user',
       endpoint: endpoints['user']!,
       methodConnectors: {
-        'inviteCode': _i1.MethodConnector(
-          name: 'inviteCode',
-          params: {},
+        'get': _i1.MethodConnector(
+          name: 'get',
+          params: {
+            'page': _i1.ParameterDescription(
+              name: 'page',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
           call: (
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i3.UserEndpoint).inviteCode(session),
+              (endpoints['user'] as _i3.UserEndpoint).get(
+            session,
+            page: params['page'],
+          ),
         )
       },
     );

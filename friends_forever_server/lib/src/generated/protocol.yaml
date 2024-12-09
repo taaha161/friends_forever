@@ -1,4 +1,4 @@
 example:
   - hello:
 user:
-  - inviteCode:
+  - get:

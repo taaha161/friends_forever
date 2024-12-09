@@ -1,0 +1,40 @@
+{
+  "actions": [
+    {
+      "type": "deleteTable",
+      "deleteTable": "user"
+    },
+    {
+      "type": "deleteTable",
+      "deleteTable": "invite_code"
+    },
+    {
+      "type": "deleteTable",
+      "deleteTable": "friends"
+    }
+  ],
+  "warnings": [
+    {
+      "type": "tableDropped",
+      "message": "Table \"user\" will be dropped.",
+      "table": "user",
+      "columns": [],
+      "destrucive": true
+    },
+    {
+      "type": "tableDropped",
+      "message": "Table \"invite_code\" will be dropped.",
+      "table": "invite_code",
+      "columns": [],
+      "destrucive": true
+    },
+    {
+      "type": "tableDropped",
+      "message": "Table \"friends\" will be dropped.",
+      "table": "friends",
+      "columns": [],
+      "destrucive": true
+    }
+  ],
+  "migrationApiVersion": 1
+}
