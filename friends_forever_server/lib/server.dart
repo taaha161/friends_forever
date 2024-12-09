@@ -17,11 +17,21 @@ void run(List<String> args) async {
         print(validationCode);
         return true;
       },
+      //sendVerificationEmail,
       sendPasswordResetEmail: onPasswordReset,
       onUserCreated: onUserCreated));
-
+  // Initialize Serverpod and connect it with your generated code.
   final pod = Serverpod(args, Protocol(), Endpoints(),
       authenticationHandler: auth.authenticationHandler);
 
+  pod.webServer.addRoute(RouteRoot(), '/');
+  pod.webServer.addRoute(RouteRoot(), '/index.html');
+
+  pod.webServer.addRoute(
+    RouteStaticDirectory(serverDirectory: 'static', basePath: '/'),
+    '/*',
+  );
+
+  // Start the server.
   await pod.start();
 }
