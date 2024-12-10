@@ -10,34 +10,224 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
-import '../endpoints/example_endpoint.dart' as _i2;
-import '../endpoints/friends_endpoint.dart' as _i3;
-import '../endpoints/user_endpoint.dart' as _i4;
-import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i5;
+import '../endpoints/apology_endpoint.dart' as _i2;
+import '../endpoints/bumps_endpoint.dart' as _i3;
+import '../endpoints/example_endpoint.dart' as _i4;
+import '../endpoints/friends_endpoint.dart' as _i5;
+import '../endpoints/letter_endpoint.dart' as _i6;
+import '../endpoints/user_endpoint.dart' as _i7;
+import 'package:friends_forever_server/src/generated/apologystatus.dart' as _i8;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i9;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
   void initializeEndpoints(_i1.Server server) {
     var endpoints = <String, _i1.Endpoint>{
-      'example': _i2.ExampleEndpoint()
+      'apology': _i2.ApologyEndpoint()
+        ..initialize(
+          server,
+          'apology',
+          null,
+        ),
+      'bumps': _i3.BumpsEndpoint()
+        ..initialize(
+          server,
+          'bumps',
+          null,
+        ),
+      'example': _i4.ExampleEndpoint()
         ..initialize(
           server,
           'example',
           null,
         ),
-      'friends': _i3.FriendsEndpoint()
+      'friends': _i5.FriendsEndpoint()
         ..initialize(
           server,
           'friends',
           null,
         ),
-      'user': _i4.UserEndpoint()
+      'letter': _i6.LetterEndpoint()
+        ..initialize(
+          server,
+          'letter',
+          null,
+        ),
+      'user': _i7.UserEndpoint()
         ..initialize(
           server,
           'user',
           null,
         ),
     };
+    connectors['apology'] = _i1.EndpointConnector(
+      name: 'apology',
+      endpoint: endpoints['apology']!,
+      methodConnectors: {
+        'create': _i1.MethodConnector(
+          name: 'create',
+          params: {
+            'recipientId': _i1.ParameterDescription(
+              name: 'recipientId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'message': _i1.ParameterDescription(
+              name: 'message',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+            'subject': _i1.ParameterDescription(
+              name: 'subject',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['apology'] as _i2.ApologyEndpoint).create(
+            session,
+            params['recipientId'],
+            params['message'],
+            params['subject'],
+          ),
+        ),
+        'read': _i1.MethodConnector(
+          name: 'read',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['apology'] as _i2.ApologyEndpoint).read(
+            session,
+            params['id'],
+          ),
+        ),
+        'update': _i1.MethodConnector(
+          name: 'update',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'message': _i1.ParameterDescription(
+              name: 'message',
+              type: _i1.getType<String?>(),
+              nullable: true,
+            ),
+            'subject': _i1.ParameterDescription(
+              name: 'subject',
+              type: _i1.getType<String?>(),
+              nullable: true,
+            ),
+            'status': _i1.ParameterDescription(
+              name: 'status',
+              type: _i1.getType<_i8.ApologyStatus?>(),
+              nullable: true,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['apology'] as _i2.ApologyEndpoint).update(
+            session,
+            params['id'],
+            message: params['message'],
+            subject: params['subject'],
+            status: params['status'],
+          ),
+        ),
+        'delete': _i1.MethodConnector(
+          name: 'delete',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['apology'] as _i2.ApologyEndpoint).delete(
+            session,
+            params['id'],
+          ),
+        ),
+        'recieved': _i1.MethodConnector(
+          name: 'recieved',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['apology'] as _i2.ApologyEndpoint).recieved(session),
+        ),
+        'sent': _i1.MethodConnector(
+          name: 'sent',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['apology'] as _i2.ApologyEndpoint).sent(session),
+        ),
+      },
+    );
+    connectors['bumps'] = _i1.EndpointConnector(
+      name: 'bumps',
+      endpoint: endpoints['bumps']!,
+      methodConnectors: {
+        'create': _i1.MethodConnector(
+          name: 'create',
+          params: {
+            'recipientId': _i1.ParameterDescription(
+              name: 'recipientId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['bumps'] as _i3.BumpsEndpoint).create(
+            session,
+            params['recipientId'],
+          ),
+        ),
+        'recieved': _i1.MethodConnector(
+          name: 'recieved',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['bumps'] as _i3.BumpsEndpoint).recieved(session),
+        ),
+        'sent': _i1.MethodConnector(
+          name: 'sent',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['bumps'] as _i3.BumpsEndpoint).sent(session),
+        ),
+      },
+    );
     connectors['example'] = _i1.EndpointConnector(
       name: 'example',
       endpoint: endpoints['example']!,
@@ -55,7 +245,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['example'] as _i2.ExampleEndpoint).hello(
+              (endpoints['example'] as _i4.ExampleEndpoint).hello(
             session,
             params['name'],
           ),
@@ -79,7 +269,7 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['friends'] as _i3.FriendsEndpoint).addFriend(
+              (endpoints['friends'] as _i5.FriendsEndpoint).addFriend(
             session,
             params['inviteCode'],
           ),
@@ -97,10 +287,130 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['friends'] as _i3.FriendsEndpoint).removeFriend(
+              (endpoints['friends'] as _i5.FriendsEndpoint).removeFriend(
             session,
             params['inviteCode'],
           ),
+        ),
+      },
+    );
+    connectors['letter'] = _i1.EndpointConnector(
+      name: 'letter',
+      endpoint: endpoints['letter']!,
+      methodConnectors: {
+        'create': _i1.MethodConnector(
+          name: 'create',
+          params: {
+            'recipientId': _i1.ParameterDescription(
+              name: 'recipientId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'message': _i1.ParameterDescription(
+              name: 'message',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+            'subject': _i1.ParameterDescription(
+              name: 'subject',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['letter'] as _i6.LetterEndpoint).create(
+            session,
+            params['recipientId'],
+            params['message'],
+            params['subject'],
+          ),
+        ),
+        'read': _i1.MethodConnector(
+          name: 'read',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['letter'] as _i6.LetterEndpoint).read(
+            session,
+            params['id'],
+          ),
+        ),
+        'update': _i1.MethodConnector(
+          name: 'update',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'message': _i1.ParameterDescription(
+              name: 'message',
+              type: _i1.getType<String?>(),
+              nullable: true,
+            ),
+            'subject': _i1.ParameterDescription(
+              name: 'subject',
+              type: _i1.getType<String?>(),
+              nullable: true,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['letter'] as _i6.LetterEndpoint).update(
+            session,
+            params['id'],
+            message: params['message'],
+            subject: params['subject'],
+          ),
+        ),
+        'delete': _i1.MethodConnector(
+          name: 'delete',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['letter'] as _i6.LetterEndpoint).delete(
+            session,
+            params['id'],
+          ),
+        ),
+        'recieved': _i1.MethodConnector(
+          name: 'recieved',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['letter'] as _i6.LetterEndpoint).recieved(session),
+        ),
+        'sent': _i1.MethodConnector(
+          name: 'sent',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['letter'] as _i6.LetterEndpoint).sent(session),
         ),
       },
     );
@@ -121,13 +431,13 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i4.UserEndpoint).get(
+              (endpoints['user'] as _i7.UserEndpoint).get(
             session,
             page: params['page'],
           ),
         )
       },
     );
-    modules['serverpod_auth'] = _i5.Endpoints()..initializeEndpoints(server);
+    modules['serverpod_auth'] = _i9.Endpoints()..initializeEndpoints(server);
   }
 }

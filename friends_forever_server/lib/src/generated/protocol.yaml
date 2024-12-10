@@ -1,7 +1,25 @@
+apology:
+  - create:
+  - read:
+  - update:
+  - delete:
+  - recieved:
+  - sent:
+bumps:
+  - create:
+  - recieved:
+  - sent:
 example:
   - hello:
 friends:
   - addFriend:
   - removeFriend:
+letter:
+  - create:
+  - read:
+  - update:
+  - delete:
+  - recieved:
+  - sent:
 user:
   - get:

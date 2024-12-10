@@ -18,7 +18,10 @@ import 'friends.dart' as _i6;
 import 'invite_code.dart' as _i7;
 import 'letter.dart' as _i8;
 import 'user.dart' as _i9;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i10;
+import 'package:friends_forever_client/src/protocol/apology.dart' as _i10;
+import 'package:friends_forever_client/src/protocol/bump.dart' as _i11;
+import 'package:friends_forever_client/src/protocol/letter.dart' as _i12;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i13;
 export 'apology.dart';
 export 'apologystatus.dart';
 export 'bump.dart';
@@ -99,8 +102,20 @@ class Protocol extends _i1.SerializationManager {
       return (data as Map).map((k, v) =>
           MapEntry(deserialize<String>(k), deserialize<String>(v))) as dynamic;
     }
+    if (t == List<_i10.Apologies>) {
+      return (data as List).map((e) => deserialize<_i10.Apologies>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i11.Bumps>) {
+      return (data as List).map((e) => deserialize<_i11.Bumps>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i12.Letters>) {
+      return (data as List).map((e) => deserialize<_i12.Letters>(e)).toList()
+          as dynamic;
+    }
     try {
-      return _i10.Protocol().deserialize<T>(data, t);
+      return _i13.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -133,7 +148,7 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i9.User) {
       return 'User';
     }
-    className = _i10.Protocol().getClassNameForObject(data);
+    className = _i13.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -172,7 +187,7 @@ class Protocol extends _i1.SerializationManager {
     }
     if (dataClassName.startsWith('serverpod_auth.')) {
       data['className'] = dataClassName.substring(15);
-      return _i10.Protocol().deserializeByClassName(data);
+      return _i13.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }

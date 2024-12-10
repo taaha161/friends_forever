@@ -20,6 +20,9 @@ import 'friends.dart' as _i8;
 import 'invite_code.dart' as _i9;
 import 'letter.dart' as _i10;
 import 'user.dart' as _i11;
+import 'package:friends_forever_server/src/generated/apology.dart' as _i12;
+import 'package:friends_forever_server/src/generated/bump.dart' as _i13;
+import 'package:friends_forever_server/src/generated/letter.dart' as _i14;
 export 'apology.dart';
 export 'apologystatus.dart';
 export 'bump.dart';
@@ -674,6 +677,18 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == Map<String, String>) {
       return (data as Map).map((k, v) =>
           MapEntry(deserialize<String>(k), deserialize<String>(v))) as dynamic;
+    }
+    if (t == List<_i12.Apologies>) {
+      return (data as List).map((e) => deserialize<_i12.Apologies>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i13.Bumps>) {
+      return (data as List).map((e) => deserialize<_i13.Bumps>(e)).toList()
+          as dynamic;
+    }
+    if (t == List<_i14.Letters>) {
+      return (data as List).map((e) => deserialize<_i14.Letters>(e)).toList()
+          as dynamic;
     }
     try {
       return _i3.Protocol().deserialize<T>(data, t);

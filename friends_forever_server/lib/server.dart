@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:friends_forever_server/src/utils/utils.dart';
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
+
 import 'package:serverpod/serverpod.dart';
 
 import 'package:friends_forever_server/src/web/routes/root.dart';

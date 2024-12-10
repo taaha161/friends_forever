@@ -28,7 +28,7 @@ Future<void> onUserCreated(Session session, auth.UserInfo userInfo) async {
     final inviteCode = await InviteCode.db.insertRow(
         session, InviteCode(userInfoId: userInfo.id!, code: randomCode));
 
-    final user = await User.db.insertRow(
+    await User.db.insertRow(
         session,
         User(
           userInfoId: userInfo.id!,
@@ -93,4 +93,9 @@ Future<bool> sendVerificationEmail(session, email, validationCode) async {
 Future<int?> getAuthenticatedUserId(Session session) async {
   final authenticatedInfo = await session.authenticated;
   return authenticatedInfo?.userId;
+}
+
+Future<User?> getUser(Session session, int userInfoId) async {
+  return await User.db
+      .findFirstRow(session, where: (p0) => p0.userInfoId.equals(userInfoId));
 }
