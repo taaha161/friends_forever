@@ -112,7 +112,7 @@ Future<void> _addFriendship(Session session, User user1, User user2) async {
   await Friends.db.insert(session, friendships);
 }
 
-/// Adds a bidirectional friendship relationship between two users.
+/// removes a bidirectional friendship relationship between two users.
 Future<void> _removeFriendship(Session session, User user1, User user2) async {
   await Friends.db.deleteWhere(
     session,
