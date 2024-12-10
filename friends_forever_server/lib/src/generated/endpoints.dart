@@ -83,7 +83,25 @@ class Endpoints extends _i1.EndpointDispatch {
             session,
             params['inviteCode'],
           ),
-        )
+        ),
+        'removeFriend': _i1.MethodConnector(
+          name: 'removeFriend',
+          params: {
+            'inviteCode': _i1.ParameterDescription(
+              name: 'inviteCode',
+              type: _i1.getType<String>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['friends'] as _i3.FriendsEndpoint).removeFriend(
+            session,
+            params['inviteCode'],
+          ),
+        ),
       },
     );
     connectors['user'] = _i1.EndpointConnector(

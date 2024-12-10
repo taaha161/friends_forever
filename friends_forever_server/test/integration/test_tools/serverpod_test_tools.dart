@@ -202,6 +202,35 @@ class _FriendsEndpoint {
       }
     });
   }
+
+  _i3.Future<Map<String, String>> removeFriend(
+    _i1.TestSessionBuilder sessionBuilder,
+    String inviteCode,
+  ) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+        endpoint: 'friends',
+        method: 'removeFriend',
+      );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'friends',
+          methodName: 'removeFriend',
+          parameters: _i1.testObjectToJson({'inviteCode': inviteCode}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue = await (_localCallContext.method.call(
+          _localUniqueSession,
+          _localCallContext.arguments,
+        ) as _i3.Future<Map<String, String>>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
 }
 
 class _UserEndpoint {

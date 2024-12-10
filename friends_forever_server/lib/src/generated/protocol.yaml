@@ -2,5 +2,6 @@ example:
   - hello:
 friends:
   - addFriend:
+  - removeFriend:
 user:
   - get:

@@ -46,6 +46,13 @@ class EndpointFriends extends _i1.EndpointRef {
         'addFriend',
         {'inviteCode': inviteCode},
       );
+
+  _i2.Future<Map<String, String>> removeFriend(String inviteCode) =>
+      caller.callServerEndpoint<Map<String, String>>(
+        'friends',
+        'removeFriend',
+        {'inviteCode': inviteCode},
+      );
 }
 
 /// {@category Endpoint}
