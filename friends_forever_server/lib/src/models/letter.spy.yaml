@@ -1,0 +1,12 @@
+class: Letters
+table: letters
+fields:
+    sender: User?, relation
+    reciever: User?, relation
+    message: String
+    subject: String
+    createdAt: DateTime
+    updatedAt: DateTime
+indexes:
+    letters_index:
+        fields: senderId, recieverId

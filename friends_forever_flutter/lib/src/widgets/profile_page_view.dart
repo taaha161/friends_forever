@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:friends_forever_client/friends_forever_client.dart';
 import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart';
@@ -10,7 +12,7 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: client.user.get(page: 0),
+        future: client.user.get(page: 1),
         builder: (context, AsyncSnapshot<User?> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -31,7 +33,17 @@ class AccountPage extends StatelessWidget {
                     : Text(snapshot.data!.userInfo!.userIdentifier),
                 subtitle: Text(snapshot.data!.userInfo!.email ?? ""),
                 trailing: Text(
-                    'Invite Code: ${snapshot.data!.inviteCode!.code} \n ${snapshot.data!.friends![0].user!.userInfo!.userName}'),
+                    'Invite Code: ${snapshot.data!.inviteCode!.code} \n ${snapshot.data!.friends!.length}'),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    final message = await client.user.addFriend("efeKH");
+                    log(message['message']!);
+                  },
+                  child: const Text('Add a friend'),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(16),

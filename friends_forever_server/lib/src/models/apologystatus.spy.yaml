@@ -1,0 +1,6 @@
+enum: ApologyStatus
+serialized: byName
+values:
+ - pending
+ - accepted
+ - rejected

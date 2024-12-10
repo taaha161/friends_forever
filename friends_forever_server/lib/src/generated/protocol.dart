@@ -12,13 +12,21 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'package:serverpod/protocol.dart' as _i2;
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i3;
-import 'example.dart' as _i4;
-import 'friends.dart' as _i5;
-import 'invite_code.dart' as _i6;
-import 'user.dart' as _i7;
+import 'apology.dart' as _i4;
+import 'apologystatus.dart' as _i5;
+import 'bump.dart' as _i6;
+import 'example.dart' as _i7;
+import 'friends.dart' as _i8;
+import 'invite_code.dart' as _i9;
+import 'letter.dart' as _i10;
+import 'user.dart' as _i11;
+export 'apology.dart';
+export 'apologystatus.dart';
+export 'bump.dart';
 export 'example.dart';
 export 'friends.dart';
 export 'invite_code.dart';
+export 'letter.dart';
 export 'user.dart';
 
 class Protocol extends _i1.SerializationManagerServer {
@@ -29,6 +37,212 @@ class Protocol extends _i1.SerializationManagerServer {
   static final Protocol _instance = Protocol._();
 
   static final List<_i2.TableDefinition> targetTableDefinitions = [
+    _i2.TableDefinition(
+      name: 'apologies',
+      dartName: 'Apologies',
+      schema: 'public',
+      module: 'friends_forever',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'apologies_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'senderId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'recieverId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'message',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'subject',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'status',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'protocol:ApologyStatus',
+        ),
+        _i2.ColumnDefinition(
+          name: 'createdAt',
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
+        ),
+        _i2.ColumnDefinition(
+          name: 'updatedAt',
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
+        ),
+      ],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'apologies_fk_0',
+          columns: ['senderId'],
+          referenceTable: 'user',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+        _i2.ForeignKeyDefinition(
+          constraintName: 'apologies_fk_1',
+          columns: ['recieverId'],
+          referenceTable: 'user',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+      ],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'apologies_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+        _i2.IndexDefinition(
+          indexName: 'apology_index',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'senderId',
+            ),
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'recieverId',
+            ),
+          ],
+          type: 'btree',
+          isUnique: false,
+          isPrimary: false,
+        ),
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
+      name: 'bumps',
+      dartName: 'Bumps',
+      schema: 'public',
+      module: 'friends_forever',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'bumps_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'senderId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'recieverId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'createdAt',
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
+        ),
+        _i2.ColumnDefinition(
+          name: 'updatedAt',
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
+        ),
+      ],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'bumps_fk_0',
+          columns: ['senderId'],
+          referenceTable: 'user',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+        _i2.ForeignKeyDefinition(
+          constraintName: 'bumps_fk_1',
+          columns: ['recieverId'],
+          referenceTable: 'user',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+      ],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'bumps_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+        _i2.IndexDefinition(
+          indexName: 'bumps_index',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'senderId',
+            ),
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'recieverId',
+            ),
+          ],
+          type: 'btree',
+          isUnique: false,
+          isPrimary: false,
+        ),
+      ],
+      managed: true,
+    ),
     _i2.TableDefinition(
       name: 'friends',
       dartName: 'Friends',
@@ -211,6 +425,112 @@ class Protocol extends _i1.SerializationManagerServer {
       managed: true,
     ),
     _i2.TableDefinition(
+      name: 'letters',
+      dartName: 'Letters',
+      schema: 'public',
+      module: 'friends_forever',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'letters_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'senderId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'recieverId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'message',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'subject',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'createdAt',
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
+        ),
+        _i2.ColumnDefinition(
+          name: 'updatedAt',
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
+        ),
+      ],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'letters_fk_0',
+          columns: ['senderId'],
+          referenceTable: 'user',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+        _i2.ForeignKeyDefinition(
+          constraintName: 'letters_fk_1',
+          columns: ['recieverId'],
+          referenceTable: 'user',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+      ],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'letters_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            )
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+        _i2.IndexDefinition(
+          indexName: 'letters_index',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'senderId',
+            ),
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'recieverId',
+            ),
+          ],
+          type: 'btree',
+          isUnique: false,
+          isPrimary: false,
+        ),
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
       name: 'user',
       dartName: 'User',
       schema: 'public',
@@ -298,34 +618,62 @@ class Protocol extends _i1.SerializationManagerServer {
     Type? t,
   ]) {
     t ??= T;
-    if (t == _i4.Example) {
-      return _i4.Example.fromJson(data) as T;
+    if (t == _i4.Apologies) {
+      return _i4.Apologies.fromJson(data) as T;
     }
-    if (t == _i5.Friends) {
-      return _i5.Friends.fromJson(data) as T;
+    if (t == _i5.ApologyStatus) {
+      return _i5.ApologyStatus.fromJson(data) as T;
     }
-    if (t == _i6.InviteCode) {
-      return _i6.InviteCode.fromJson(data) as T;
+    if (t == _i6.Bumps) {
+      return _i6.Bumps.fromJson(data) as T;
     }
-    if (t == _i7.User) {
-      return _i7.User.fromJson(data) as T;
+    if (t == _i7.Example) {
+      return _i7.Example.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i4.Example?>()) {
-      return (data != null ? _i4.Example.fromJson(data) : null) as T;
+    if (t == _i8.Friends) {
+      return _i8.Friends.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i5.Friends?>()) {
-      return (data != null ? _i5.Friends.fromJson(data) : null) as T;
+    if (t == _i9.InviteCode) {
+      return _i9.InviteCode.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i6.InviteCode?>()) {
-      return (data != null ? _i6.InviteCode.fromJson(data) : null) as T;
+    if (t == _i10.Letters) {
+      return _i10.Letters.fromJson(data) as T;
     }
-    if (t == _i1.getType<_i7.User?>()) {
-      return (data != null ? _i7.User.fromJson(data) : null) as T;
+    if (t == _i11.User) {
+      return _i11.User.fromJson(data) as T;
     }
-    if (t == _i1.getType<List<_i5.Friends>?>()) {
+    if (t == _i1.getType<_i4.Apologies?>()) {
+      return (data != null ? _i4.Apologies.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i5.ApologyStatus?>()) {
+      return (data != null ? _i5.ApologyStatus.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i6.Bumps?>()) {
+      return (data != null ? _i6.Bumps.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i7.Example?>()) {
+      return (data != null ? _i7.Example.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i8.Friends?>()) {
+      return (data != null ? _i8.Friends.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i9.InviteCode?>()) {
+      return (data != null ? _i9.InviteCode.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i10.Letters?>()) {
+      return (data != null ? _i10.Letters.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i11.User?>()) {
+      return (data != null ? _i11.User.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<List<_i8.Friends>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i5.Friends>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i8.Friends>(e)).toList()
           : null) as dynamic;
+    }
+    if (t == Map<String, String>) {
+      return (data as Map).map((k, v) =>
+          MapEntry(deserialize<String>(k), deserialize<String>(v))) as dynamic;
     }
     try {
       return _i3.Protocol().deserialize<T>(data, t);
@@ -340,16 +688,28 @@ class Protocol extends _i1.SerializationManagerServer {
   String? getClassNameForObject(Object? data) {
     String? className = super.getClassNameForObject(data);
     if (className != null) return className;
-    if (data is _i4.Example) {
+    if (data is _i4.Apologies) {
+      return 'Apologies';
+    }
+    if (data is _i5.ApologyStatus) {
+      return 'ApologyStatus';
+    }
+    if (data is _i6.Bumps) {
+      return 'Bumps';
+    }
+    if (data is _i7.Example) {
       return 'Example';
     }
-    if (data is _i5.Friends) {
+    if (data is _i8.Friends) {
       return 'Friends';
     }
-    if (data is _i6.InviteCode) {
+    if (data is _i9.InviteCode) {
       return 'InviteCode';
     }
-    if (data is _i7.User) {
+    if (data is _i10.Letters) {
+      return 'Letters';
+    }
+    if (data is _i11.User) {
       return 'User';
     }
     className = _i2.Protocol().getClassNameForObject(data);
@@ -369,17 +729,29 @@ class Protocol extends _i1.SerializationManagerServer {
     if (dataClassName is! String) {
       return super.deserializeByClassName(data);
     }
+    if (dataClassName == 'Apologies') {
+      return deserialize<_i4.Apologies>(data['data']);
+    }
+    if (dataClassName == 'ApologyStatus') {
+      return deserialize<_i5.ApologyStatus>(data['data']);
+    }
+    if (dataClassName == 'Bumps') {
+      return deserialize<_i6.Bumps>(data['data']);
+    }
     if (dataClassName == 'Example') {
-      return deserialize<_i4.Example>(data['data']);
+      return deserialize<_i7.Example>(data['data']);
     }
     if (dataClassName == 'Friends') {
-      return deserialize<_i5.Friends>(data['data']);
+      return deserialize<_i8.Friends>(data['data']);
     }
     if (dataClassName == 'InviteCode') {
-      return deserialize<_i6.InviteCode>(data['data']);
+      return deserialize<_i9.InviteCode>(data['data']);
+    }
+    if (dataClassName == 'Letters') {
+      return deserialize<_i10.Letters>(data['data']);
     }
     if (dataClassName == 'User') {
-      return deserialize<_i7.User>(data['data']);
+      return deserialize<_i11.User>(data['data']);
     }
     if (dataClassName.startsWith('serverpod.')) {
       data['className'] = dataClassName.substring(10);
@@ -407,12 +779,18 @@ class Protocol extends _i1.SerializationManagerServer {
       }
     }
     switch (t) {
-      case _i5.Friends:
-        return _i5.Friends.t;
-      case _i6.InviteCode:
-        return _i6.InviteCode.t;
-      case _i7.User:
-        return _i7.User.t;
+      case _i4.Apologies:
+        return _i4.Apologies.t;
+      case _i6.Bumps:
+        return _i6.Bumps.t;
+      case _i8.Friends:
+        return _i8.Friends.t;
+      case _i9.InviteCode:
+        return _i9.InviteCode.t;
+      case _i10.Letters:
+        return _i10.Letters.t;
+      case _i11.User:
+        return _i11.User.t;
     }
     return null;
   }

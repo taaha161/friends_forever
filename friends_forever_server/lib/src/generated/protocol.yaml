@@ -1,4 +1,6 @@
 example:
   - hello:
+friends:
+  - addFriend:
 user:
   - get:

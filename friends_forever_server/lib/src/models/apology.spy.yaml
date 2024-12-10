@@ -1,0 +1,14 @@
+class: Apologies
+table: apologies
+fields:
+    sender: User?, relation
+    reciever: User?, relation
+    message: String
+    subject: String
+    status: ApologyStatus
+    createdAt: DateTime
+    updatedAt: DateTime
+indexes:
+    apology_index:
+        fields: senderId, recieverId
+

@@ -34,12 +34,6 @@ Future<void> onUserCreated(Session session, auth.UserInfo userInfo) async {
           userInfoId: userInfo.id!,
           inviteCodeId: inviteCode.id!,
         ));
-    final friend = Friends(
-        userId: user.id!,
-        friendId: 3,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now());
-    await Friends.db.insertRow(session, friend);
   }
 }
 
@@ -93,4 +87,10 @@ Future<bool> sendVerificationEmail(session, email, validationCode) async {
   }
 
   return true;
+}
+
+/// Extracts the authenticated user's ID from the session.
+Future<int?> getAuthenticatedUserId(Session session) async {
+  final authenticatedInfo = await session.authenticated;
+  return authenticatedInfo?.userId;
 }

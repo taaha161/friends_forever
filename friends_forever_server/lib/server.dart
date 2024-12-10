@@ -18,7 +18,11 @@ void run(List<String> args) async {
         return true;
       },
       //sendVerificationEmail,
-      sendPasswordResetEmail: onPasswordReset,
+      sendPasswordResetEmail: (session, user, validationCode) async {
+        print(validationCode);
+        return true;
+      },
+      // onPasswordReset,
       onUserCreated: onUserCreated));
   // Initialize Serverpod and connect it with your generated code.
   final pod = Serverpod(args, Protocol(), Endpoints(),

@@ -11,8 +11,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../endpoints/example_endpoint.dart' as _i2;
-import '../endpoints/user_endpoint.dart' as _i3;
-import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i4;
+import '../endpoints/friends_endpoint.dart' as _i3;
+import '../endpoints/user_endpoint.dart' as _i4;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i5;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -24,7 +25,13 @@ class Endpoints extends _i1.EndpointDispatch {
           'example',
           null,
         ),
-      'user': _i3.UserEndpoint()
+      'friends': _i3.FriendsEndpoint()
+        ..initialize(
+          server,
+          'friends',
+          null,
+        ),
+      'user': _i4.UserEndpoint()
         ..initialize(
           server,
           'user',
@@ -55,6 +62,30 @@ class Endpoints extends _i1.EndpointDispatch {
         )
       },
     );
+    connectors['friends'] = _i1.EndpointConnector(
+      name: 'friends',
+      endpoint: endpoints['friends']!,
+      methodConnectors: {
+        'addFriend': _i1.MethodConnector(
+          name: 'addFriend',
+          params: {
+            'inviteCode': _i1.ParameterDescription(
+              name: 'inviteCode',
+              type: _i1.getType<String>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['friends'] as _i3.FriendsEndpoint).addFriend(
+            session,
+            params['inviteCode'],
+          ),
+        )
+      },
+    );
     connectors['user'] = _i1.EndpointConnector(
       name: 'user',
       endpoint: endpoints['user']!,
@@ -72,13 +103,13 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i3.UserEndpoint).get(
+              (endpoints['user'] as _i4.UserEndpoint).get(
             session,
             page: params['page'],
           ),
         )
       },
     );
-    modules['serverpod_auth'] = _i4.Endpoints()..initializeEndpoints(server);
+    modules['serverpod_auth'] = _i5.Endpoints()..initializeEndpoints(server);
   }
 }

@@ -30,12 +30,33 @@ class EndpointExample extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointFriends extends _i1.EndpointRef {
+  EndpointFriends(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'friends';
+
+  /// Fetches the authenticated user and their details, including friends, invite codes, etc.
+  /// [page] is used for pagination.
+  /// Adds a friend based on the provided [inviteCode].
+  /// Returns a success or error message in a map.
+  _i2.Future<Map<String, String>> addFriend(String inviteCode) =>
+      caller.callServerEndpoint<Map<String, String>>(
+        'friends',
+        'addFriend',
+        {'inviteCode': inviteCode},
+      );
+}
+
+/// {@category Endpoint}
 class EndpointUser extends _i1.EndpointRef {
   EndpointUser(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'user';
 
+  /// Fetches the authenticated user and their details, including friends, invite codes, etc.
+  /// [page] is used for pagination.
   _i2.Future<_i3.User?> get({required int page}) =>
       caller.callServerEndpoint<_i3.User?>(
         'user',
@@ -79,11 +100,14 @@ class Client extends _i1.ServerpodClientShared {
               disconnectStreamsOnLostInternetConnection,
         ) {
     example = EndpointExample(this);
+    friends = EndpointFriends(this);
     user = EndpointUser(this);
     modules = Modules(this);
   }
 
   late final EndpointExample example;
+
+  late final EndpointFriends friends;
 
   late final EndpointUser user;
 
@@ -92,6 +116,7 @@ class Client extends _i1.ServerpodClientShared {
   @override
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
         'example': example,
+        'friends': friends,
         'user': user,
       };
 

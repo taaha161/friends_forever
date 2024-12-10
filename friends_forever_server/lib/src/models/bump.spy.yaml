@@ -1,0 +1,11 @@
+class: Bumps
+table: bumps
+fields:
+    sender: User?, relation
+    reciever: User?, relation
+    createdAt: DateTime
+    updatedAt: DateTime
+indexes:
+    bumps_index:
+        fields: senderId, recieverId
+
