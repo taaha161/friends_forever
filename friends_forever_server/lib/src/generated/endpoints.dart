@@ -16,7 +16,8 @@ import '../endpoints/example_endpoint.dart' as _i4;
 import '../endpoints/friends_endpoint.dart' as _i5;
 import '../endpoints/letter_endpoint.dart' as _i6;
 import '../endpoints/user_endpoint.dart' as _i7;
-import 'package:friends_forever_server/src/generated/apologystatus.dart' as _i8;
+import 'package:friends_forever_server/src/generated/apology_status.dart'
+    as _i8;
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i9;
 
 class Endpoints extends _i1.EndpointDispatch {
@@ -292,6 +293,24 @@ class Endpoints extends _i1.EndpointDispatch {
             params['inviteCode'],
           ),
         ),
+        'get': _i1.MethodConnector(
+          name: 'get',
+          params: {
+            'page': _i1.ParameterDescription(
+              name: 'page',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['friends'] as _i5.FriendsEndpoint).get(
+            session,
+            page: params['page'],
+          ),
+        ),
       },
     );
     connectors['letter'] = _i1.EndpointConnector(
@@ -420,10 +439,19 @@ class Endpoints extends _i1.EndpointDispatch {
       methodConnectors: {
         'get': _i1.MethodConnector(
           name: 'get',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).get(session),
+        ),
+        'verifyEmail': _i1.MethodConnector(
+          name: 'verifyEmail',
           params: {
-            'page': _i1.ParameterDescription(
-              name: 'page',
-              type: _i1.getType<int>(),
+            'userInfo': _i1.ParameterDescription(
+              name: 'userInfo',
+              type: _i1.getType<_i9.UserInfo>(),
               nullable: false,
             )
           },
@@ -431,11 +459,11 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['user'] as _i7.UserEndpoint).get(
+              (endpoints['user'] as _i7.UserEndpoint).verifyEmail(
             session,
-            page: params['page'],
+            params['userInfo'],
           ),
-        )
+        ),
       },
     );
     modules['serverpod_auth'] = _i9.Endpoints()..initializeEndpoints(server);

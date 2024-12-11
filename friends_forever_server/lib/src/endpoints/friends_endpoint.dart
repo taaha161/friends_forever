@@ -2,6 +2,7 @@ import 'package:friends_forever_server/src/generated/protocol.dart';
 import 'package:friends_forever_server/src/generated/user.dart';
 import 'package:friends_forever_server/src/utils/utils.dart';
 import 'package:serverpod/serverpod.dart';
+import 'package:serverpod_auth_server/serverpod_auth_server.dart';
 
 class FriendsEndpoint extends Endpoint {
   // Override to enforce login requirement
@@ -62,6 +63,22 @@ class FriendsEndpoint extends Endpoint {
     } catch (e) {
       return {"message": e.toString()};
     }
+  }
+
+  Future<List<Friends>?> get(Session session, {int page = 1}) async {
+    final authenticatedUserId = await getAuthenticatedUserId(session);
+    if (authenticatedUserId == null) return null;
+    final user = await getUser(session, authenticatedUserId);
+    if (user == null) return null;
+    final friends = Friends.db.find(session,
+        where: (p0) => p0.userId.equals(user.id),
+        offset: (page - 1) * 10,
+        limit: 10,
+        include: Friends.include(
+            friend: User.include(
+                userInfo: UserInfo.include(),
+                inviteCode: InviteCode.include())));
+    return friends;
   }
 }
 

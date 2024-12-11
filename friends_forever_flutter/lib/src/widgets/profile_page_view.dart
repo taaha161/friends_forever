@@ -10,7 +10,7 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: client.user.get(page: 1),
+        future: client.user.get(),
         builder: (context, AsyncSnapshot<User?> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -29,9 +29,9 @@ class AccountPage extends StatelessWidget {
                 title: snapshot.data == null
                     ? Text("User not found")
                     : Text(snapshot.data!.userInfo!.userIdentifier),
-                subtitle: Text(snapshot.data!.userInfo!.id.toString()),
+                subtitle: Text(snapshot.data!.userInfo!.userName!),
                 trailing: Text(
-                    'Invite Code:" ${snapshot.data!.inviteCode!.code}" \n "${snapshot.data!.friends!.length}"'),
+                    'Invite Code: ${snapshot.data!.inviteCode!.code} \n Friends: ${snapshot.data!.friends!.length}'),
               ),
               Padding(
                 padding: const EdgeInsets.all(16),

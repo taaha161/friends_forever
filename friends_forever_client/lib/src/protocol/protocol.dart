@@ -11,7 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'apology.dart' as _i2;
-import 'apologystatus.dart' as _i3;
+import 'apology_status.dart' as _i3;
 import 'bump.dart' as _i4;
 import 'example.dart' as _i5;
 import 'friends.dart' as _i6;
@@ -20,10 +20,11 @@ import 'letter.dart' as _i8;
 import 'user.dart' as _i9;
 import 'package:friends_forever_client/src/protocol/apology.dart' as _i10;
 import 'package:friends_forever_client/src/protocol/bump.dart' as _i11;
-import 'package:friends_forever_client/src/protocol/letter.dart' as _i12;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i13;
+import 'package:friends_forever_client/src/protocol/friends.dart' as _i12;
+import 'package:friends_forever_client/src/protocol/letter.dart' as _i13;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i14;
 export 'apology.dart';
-export 'apologystatus.dart';
+export 'apology_status.dart';
 export 'bump.dart';
 export 'example.dart';
 export 'friends.dart';
@@ -110,12 +111,17 @@ class Protocol extends _i1.SerializationManager {
       return (data as List).map((e) => deserialize<_i11.Bumps>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i12.Letters>) {
-      return (data as List).map((e) => deserialize<_i12.Letters>(e)).toList()
+    if (t == _i1.getType<List<_i12.Friends>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i12.Friends>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == List<_i13.Letters>) {
+      return (data as List).map((e) => deserialize<_i13.Letters>(e)).toList()
           as dynamic;
     }
     try {
-      return _i13.Protocol().deserialize<T>(data, t);
+      return _i14.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -148,7 +154,7 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i9.User) {
       return 'User';
     }
-    className = _i13.Protocol().getClassNameForObject(data);
+    className = _i14.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -187,7 +193,7 @@ class Protocol extends _i1.SerializationManager {
     }
     if (dataClassName.startsWith('serverpod_auth.')) {
       data['className'] = dataClassName.substring(15);
-      return _i13.Protocol().deserializeByClassName(data);
+      return _i14.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }

@@ -10,7 +10,7 @@ class UserEndpoint extends Endpoint {
 
   /// Fetches the authenticated user and their details, including friends, invite codes, etc.
   /// [page] is used for pagination.
-  Future<User?> get(Session session, {int page = 1}) async {
+  Future<User?> get(Session session) async {
     final authenticatedUserId = await getAuthenticatedUserId(session);
     if (authenticatedUserId == null) return null;
 
@@ -19,21 +19,17 @@ class UserEndpoint extends Endpoint {
       where: (row) => row.userInfoId.equals(authenticatedUserId),
       include: User.include(
         userInfo: UserInfo.include(),
-        friends: _friendsIncludeConfig(page),
         inviteCode: InviteCode.include(),
       ),
     );
   }
-}
 
-/// Configures the pagination and data to include for a user's friends.
-FriendsIncludeList? _friendsIncludeConfig(int page) {
-  return Friends.includeList(
-    limit: 10,
-    offset: (page - 1) * 10,
-    include: Friends.include(
-      user: User.include(userInfo: UserInfo.include()),
-      friend: User.include(userInfo: UserInfo.include()),
-    ),
-  );
+  Future<User?> verifyEmail(Session session, UserInfo userInfo) async {
+    final user = await User.db.findFirstRow(
+      session,
+      where: (p0) => p0.userInfoId.equals(userInfo.id),
+    );
+
+    return user;
+  }
 }

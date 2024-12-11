@@ -13,7 +13,7 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import 'package:serverpod/protocol.dart' as _i2;
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i3;
 import 'apology.dart' as _i4;
-import 'apologystatus.dart' as _i5;
+import 'apology_status.dart' as _i5;
 import 'bump.dart' as _i6;
 import 'example.dart' as _i7;
 import 'friends.dart' as _i8;
@@ -22,9 +22,10 @@ import 'letter.dart' as _i10;
 import 'user.dart' as _i11;
 import 'package:friends_forever_server/src/generated/apology.dart' as _i12;
 import 'package:friends_forever_server/src/generated/bump.dart' as _i13;
-import 'package:friends_forever_server/src/generated/letter.dart' as _i14;
+import 'package:friends_forever_server/src/generated/friends.dart' as _i14;
+import 'package:friends_forever_server/src/generated/letter.dart' as _i15;
 export 'apology.dart';
-export 'apologystatus.dart';
+export 'apology_status.dart';
 export 'bump.dart';
 export 'example.dart';
 export 'friends.dart';
@@ -686,8 +687,13 @@ class Protocol extends _i1.SerializationManagerServer {
       return (data as List).map((e) => deserialize<_i13.Bumps>(e)).toList()
           as dynamic;
     }
-    if (t == List<_i14.Letters>) {
-      return (data as List).map((e) => deserialize<_i14.Letters>(e)).toList()
+    if (t == _i1.getType<List<_i14.Friends>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i14.Friends>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == List<_i15.Letters>) {
+      return (data as List).map((e) => deserialize<_i15.Letters>(e)).toList()
           as dynamic;
     }
     try {
