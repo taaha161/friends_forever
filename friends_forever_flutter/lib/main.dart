@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:friends_forever_flutter/src/serverpod_client.dart';
-import 'package:friends_forever_flutter/src/widgets/profile_page_view.dart';
-import 'package:friends_forever_flutter/src/widgets/sign_in_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:friends_forever_flutter/core/router/router.dart';
+import 'package:friends_forever_flutter/dependencies.dart';
+import 'package:friends_forever_flutter/features/user/presentation/cubit/user_cubit.dart';
+
+import 'features/auth/presentation/bloc/bloc/auth_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initDependencies();
 
-  await initializeServerpodClient();
-  runApp(const MyApp());
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(create: (_) => serviceLocator<UserCubit>()),
+    BlocProvider(
+      create: (_) => serviceLocator<AuthBloc>()..add(AuthCheckUserEvent()),
+    ),
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -15,44 +23,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Serverpod Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return BlocListener<UserCubit, UserState>(
+      listener: (context, state) {
+        CustomRouter.router.refresh();
+      },
+      child: MaterialApp.router(
+        title: "Clean Serverpod",
+        theme: ThemeData.dark(),
+        debugShowCheckedModeBanner: false,
+        routerConfig: CustomRouter.router,
       ),
-      home: const MyHomePage(title: 'Serverpod Example'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  MyHomePageState createState() => MyHomePageState();
-}
-
-class MyHomePageState extends State<MyHomePage> {
-  @override
-  void initState() {
-    super.initState();
-
-    // Make sure that we rebuild the page if signed in status changes.
-    sessionManager.addListener(() {
-      setState(() {});
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body:
-          sessionManager.isSignedIn ? const AccountPage() : const SignInPage(),
     );
   }
 }
