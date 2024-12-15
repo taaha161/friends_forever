@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         CustomRouter.router.refresh();
       },
       child: MaterialApp.router(
-        title: "Clean Serverpod",
+        title: "Friends Forever",
         theme: ThemeData.dark(),
         debugShowCheckedModeBanner: false,
         routerConfig: CustomRouter.router,
