@@ -1,6 +1,6 @@
 import 'package:fpdart/src/either.dart';
 import 'package:friends_forever_flutter/core/entities/user.dart';
-import 'package:friends_forever_flutter/core/errors/error.dart';
+import 'package:friends_forever_flutter/core/errors/failure.dart';
 import 'package:friends_forever_flutter/core/usecase/usecase.dart';
 import 'package:friends_forever_flutter/features/auth/domain/repository/auth_repository.dart';
 

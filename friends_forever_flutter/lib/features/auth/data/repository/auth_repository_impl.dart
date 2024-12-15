@@ -1,6 +1,6 @@
 import 'package:fpdart/src/either.dart';
 import 'package:friends_forever_flutter/core/entities/user.dart';
-import 'package:friends_forever_flutter/core/errors/error.dart';
+import 'package:friends_forever_flutter/core/errors/failure.dart';
 import 'package:friends_forever_flutter/features/auth/data/datasources/auth_datasource.dart';
 import 'package:friends_forever_flutter/features/auth/domain/repository/auth_repository.dart';
 
@@ -62,7 +62,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final user = await dataSource.registerWithEmailPassword(
           username: username, email: email, password: password);
-      if (user == null) return left(Failure("User not found"));
+      if (user == null || !user) return left(Failure("User not created"));
       return right(user);
     } catch (e) {
       return left(Failure(e.toString()));

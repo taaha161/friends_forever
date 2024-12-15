@@ -25,13 +25,13 @@ void run(List<String> args) async {
   final pod = Serverpod(args, Protocol(), Endpoints(),
       authenticationHandler: auth.authenticationHandler);
 
-  pod.webServer.addRoute(RouteRoot(), '/');
-  pod.webServer.addRoute(RouteRoot(), '/index.html');
+  // pod.webServer.addRoute(RouteRoot(), '/');
+  // pod.webServer.addRoute(RouteRoot(), '/index.html');
 
-  pod.webServer.addRoute(
-    RouteStaticDirectory(serverDirectory: 'static', basePath: '/'),
-    '/*',
-  );
+  // pod.webServer.addRoute(
+  //   RouteStaticDirectory(serverDirectory: 'static', basePath: '/'),
+  //   '/*',
+  // );
 
   // Start the server.
   await pod.start();

@@ -35,7 +35,7 @@ class EmailVerificationPage extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  context.pop();
+                  context.go(SignUpPage.route());
                 },
                 child: Text('Go Back'),
               ),

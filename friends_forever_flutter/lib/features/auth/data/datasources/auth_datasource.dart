@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:friends_forever_client/friends_forever_client.dart';
 import 'package:friends_forever_flutter/core/errors/exceptions.dart';
@@ -85,7 +86,11 @@ class AuthDataSourceImpl implements AuthDatasource {
     try {
       final result =
           await client.modules.auth.email.authenticate(email, password);
+
       if (!result.success) throw ServerpodException(result.failReason!.name);
+
+      sessionManager.registerSignedInUser(
+          result.userInfo!, result.keyId!, result.key!);
       final user = await client.user.get();
       if (user == null ||
           user.id == null ||
