@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:friends_forever_client/friends_forever_client.dart';
 import 'package:friends_forever_flutter/core/errors/exceptions.dart';
-import 'package:friends_forever_flutter/features/auth/data/models/user_model.dart';
+import 'package:friends_forever_flutter/features/user/data/models/user_model.dart';
 import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart';
 
 abstract interface class AuthDatasource {

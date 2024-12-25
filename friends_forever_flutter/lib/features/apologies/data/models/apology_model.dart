@@ -1,11 +1,11 @@
 import 'package:friends_forever_client/friends_forever_client.dart';
-import 'package:friends_forever_flutter/core/entities/user.dart' as core;
-import 'package:friends_forever_flutter/features/auth/data/models/user_model.dart';
+import 'package:friends_forever_flutter/features/user/data/models/user_model.dart';
+import 'package:friends_forever_flutter/features/user/domain/usecases/get_user_by_id_usecase.dart';
 
 class ApologyModel {
   int id;
-  core.User sender;
-  core.User reciever;
+  UserModel sender;
+  UserModel reciever;
   String message;
   String subject;
   ApologyStatus? status = ApologyStatus.pending;

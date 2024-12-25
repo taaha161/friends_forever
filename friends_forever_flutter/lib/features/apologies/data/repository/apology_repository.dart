@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fpdart/src/either.dart';
 import 'package:friends_forever_client/friends_forever_client.dart';
 import 'package:friends_forever_flutter/core/entities/user.dart' as core;
+import 'package:friends_forever_flutter/core/errors/exceptions.dart';
 import 'package:friends_forever_flutter/core/errors/failure.dart';
 import 'package:friends_forever_flutter/features/apologies/data/data_sources/apology_data_source.dart';
 import 'package:friends_forever_flutter/features/apologies/data/models/apology_model.dart';
@@ -34,68 +35,94 @@ class ApologyRepositoryImpl implements ApologyRepository {
     try {
       final apology = await dataSource.getApologyById(id);
       if (apology.id == null) return left(Failure("Apology not found"));
+      if (apology.reciever == null) {
+        throw ServerpodException("Reciever is null");
+      }
+      if (apology.sender == null) {
+        throw ServerpodException("Sender is null");
+      }
 
-      final senderAndReciever = await getSenderAndReciever(apology);
-
-      return senderAndReciever.fold(
-          (l) => left(Failure("Sender or reciever not found")),
-          (r) => right(ApologyModel(
-                id: apology.id!,
-                message: apology.message,
-                reciever: r[1],
-                sender: r[0],
-                subject: apology.subject,
-              )));
+      return right(ApologyModel(
+        id: apology.id!,
+        message: apology.message,
+        reciever: UserModel.fromUser(apology.reciever!),
+        sender: UserModel.fromUser(apology.sender!),
+        subject: apology.subject,
+      ));
     } catch (e) {
       return left(Failure(e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, void>> removeApology(int id) {
-    // TODO: implement removeApology
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Failure, void>> updateApology(ApologyModel apology) {
-    // TODO: implement updateApology
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Failure, List<ApologyModel>>> getRecievedApologies() {
-    // TODO: implement getRecievedApologies
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Failure, List<ApologyModel>>> getSentApologies() {
-    // TODO: implement getSentApologies
-    throw UnimplementedError();
-  }
-
-  Future<Either<Failure, List<core.User>>> getSenderAndReciever(
-      Apologies apology) async {
-    final recieverFromUseCase =
-        await getUserByIdUsecase(GetUserIdParams(apology.recieverId));
-    final senderFromUseCase =
-        await getUserByIdUsecase(GetUserIdParams(apology.senderId));
-    core.User? reciever;
-    core.User? sender;
-
-    recieverFromUseCase.fold((l) => left(Failure("Reciever not found")), (r) {
-      reciever = r;
-    });
-
-    senderFromUseCase.fold((l) => left(Failure("Sender not found")), (r) {
-      sender = r;
-    });
-
-    if (reciever == null || sender == null) {
-      return left(Failure("Reciever or Sender not found"));
+  Future<Either<Failure, void>> removeApology(int id) async {
+    try {
+      await dataSource.deleteApology(id);
+      return right(null);
+    } catch (e) {
+      return left(Failure(e.toString()));
     }
+  }
 
-    return right([sender!, reciever!]);
+  @override
+  Future<Either<Failure, void>> updateApology(ApologyModel apology) async {
+    try {
+      dataSource.updateApology(apology);
+      return right(null);
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ApologyModel>>> getRecievedApologies() async {
+    try {
+      final recievedApologies = await dataSource.recievedApologies();
+
+      return right(recievedApologies.map((apology) {
+        if (apology.reciever == null) {
+          throw ServerpodException("Reciever is null");
+        }
+        if (apology.sender == null) {
+          throw ServerpodException("Sender is null");
+        }
+
+        return ApologyModel(
+          id: apology.id!,
+          message: apology.message,
+          reciever: UserModel.fromUser(apology.reciever!),
+          sender: UserModel.fromUser(apology.sender!),
+          subject: apology.subject,
+        );
+      }).toList());
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ApologyModel>>> getSentApologies() async {
+    try {
+      final sentApologies = await dataSource.recievedApologies();
+
+      return right(sentApologies.map((apology) {
+        if (apology.reciever == null) {
+          throw ServerpodException("Reciever is null");
+        }
+        if (apology.sender == null) {
+          throw ServerpodException("Sender is null");
+        }
+
+        return ApologyModel(
+          id: apology.id!,
+          message: apology.message,
+          reciever: UserModel.fromUser(apology.reciever!),
+          sender: UserModel.fromUser(apology.sender!),
+          subject: apology.subject,
+        );
+      }).toList());
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
   }
 }
