@@ -245,6 +245,13 @@ class EndpointUser extends _i1.EndpointRef {
         {},
       );
 
+  _i2.Future<_i8.User?> getUserById(int id) =>
+      caller.callServerEndpoint<_i8.User?>(
+        'user',
+        'getUserById',
+        {'id': id},
+      );
+
   _i2.Future<_i8.User?> verifyEmail(_i9.UserInfo userInfo) =>
       caller.callServerEndpoint<_i8.User?>(
         'user',

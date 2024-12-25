@@ -446,6 +446,24 @@ class Endpoints extends _i1.EndpointDispatch {
           ) async =>
               (endpoints['user'] as _i7.UserEndpoint).get(session),
         ),
+        'getUserById': _i1.MethodConnector(
+          name: 'getUserById',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i7.UserEndpoint).getUserById(
+            session,
+            params['id'],
+          ),
+        ),
         'verifyEmail': _i1.MethodConnector(
           name: 'verifyEmail',
           params: {

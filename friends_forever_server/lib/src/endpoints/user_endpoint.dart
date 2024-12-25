@@ -24,6 +24,17 @@ class UserEndpoint extends Endpoint {
     );
   }
 
+  Future<User?> getUserById(Session session, int id) async {
+    return await User.db.findFirstRow(
+      session,
+      where: (row) => row.id.equals(id),
+      include: User.include(
+        userInfo: UserInfo.include(),
+        inviteCode: InviteCode.include(),
+      ),
+    );
+  }
+
   Future<User?> verifyEmail(Session session, UserInfo userInfo) async {
     final user = await User.db.findFirstRow(
       session,

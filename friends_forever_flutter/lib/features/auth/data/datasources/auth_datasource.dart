@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:friends_forever_client/friends_forever_client.dart';
 import 'package:friends_forever_flutter/core/errors/exceptions.dart';

@@ -24,4 +24,5 @@ letter:
   - sent:
 user:
   - get:
+  - getUserById:
   - verifyEmail:
