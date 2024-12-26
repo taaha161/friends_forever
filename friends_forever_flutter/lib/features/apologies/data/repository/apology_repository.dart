@@ -12,9 +12,8 @@ import 'package:friends_forever_flutter/features/user/domain/usecases/get_user_b
 
 class ApologyRepositoryImpl implements ApologyRepository {
   final ApologyDataSource dataSource;
-  final GetUserByIdUsecase getUserByIdUsecase;
-  ApologyRepositoryImpl(
-      {required this.dataSource, required this.getUserByIdUsecase});
+
+  ApologyRepositoryImpl({required this.dataSource});
 
   @override
   Future<Either<Failure, void>> send(ApologyModel apology) async {

@@ -19,12 +19,10 @@ abstract interface class ApologyDataSource {
 class ApologyDataSourceImpl implements ApologyDataSource {
   final SessionManager sessionManager;
   final Client client;
-  final GetUserByIdUsecase getUserByIdUsecase;
 
   ApologyDataSourceImpl({
     required this.sessionManager,
     required this.client,
-    required this.getUserByIdUsecase,
   });
 
   @override
