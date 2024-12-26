@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:friends_forever_flutter/features/apologies/presentation/pages/apologies_page.dart';
 import 'package:friends_forever_flutter/features/auth/presentation/pages/login_page.dart';
 import 'package:friends_forever_flutter/features/auth/presentation/pages/register_page.dart';
 import 'package:friends_forever_flutter/features/auth/presentation/pages/verify_email_page.dart';
@@ -11,6 +12,10 @@ class CustomRouter {
         GoRoute(
           path: LoginPage.route(),
           builder: (context, _) => LoginPage(),
+        ),
+        GoRoute(
+          path: ApologiesPage.route(),
+          builder: (context, _) => ApologiesPage(),
         ),
         GoRoute(
           path: SignUpPage.route(),

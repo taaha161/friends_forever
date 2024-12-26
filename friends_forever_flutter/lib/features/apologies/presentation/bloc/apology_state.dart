@@ -7,16 +7,20 @@ final class ApologyInitial extends ApologyState {}
 
 final class ApologyLoading extends ApologyState {}
 
-final class SentApologiesLoaded extends ApologyState {
-  final List<ApologyModel> apologies;
+final class ApologiesLoaded extends ApologyState {
+  final List<ApologyModel> sentApologies;
+  final List<ApologyModel> recievedApologies;
 
-  SentApologiesLoaded(this.apologies);
+  ApologiesLoaded(
+      {required this.recievedApologies, required this.sentApologies});
 
-  SentApologiesLoaded copyWith({
-    List<ApologyModel>? apologies,
+  ApologiesLoaded copyWith({
+    List<ApologyModel>? sentApologies,
+    List<ApologyModel>? recievedApologies,
   }) {
-    return SentApologiesLoaded(
-      apologies ?? this.apologies,
+    return ApologiesLoaded(
+      recievedApologies: recievedApologies ?? this.recievedApologies,
+      sentApologies: sentApologies ?? this.sentApologies,
     );
   }
 }
@@ -25,28 +29,6 @@ final class ApologyLoaded extends ApologyState {
   final ApologyModel apology;
 
   ApologyLoaded(this.apology);
-
-  ApologyLoaded copyWith({
-    ApologyModel? apology,
-  }) {
-    return ApologyLoaded(
-      apology ?? this.apology,
-    );
-  }
-}
-
-final class RecievedApologiesLoaded extends ApologyState {
-  final List<ApologyModel> apologies;
-
-  RecievedApologiesLoaded(this.apologies);
-
-  RecievedApologiesLoaded copyWith({
-    List<ApologyModel>? apologies,
-  }) {
-    return RecievedApologiesLoaded(
-      apologies ?? this.apologies,
-    );
-  }
 }
 
 final class ApologyError extends ApologyState {

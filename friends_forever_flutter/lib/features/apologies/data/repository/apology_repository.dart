@@ -102,7 +102,7 @@ class ApologyRepositoryImpl implements ApologyRepository {
   @override
   Future<Either<Failure, List<ApologyModel>>> getSentApologies() async {
     try {
-      final sentApologies = await dataSource.recievedApologies();
+      final sentApologies = await dataSource.sentApologies();
 
       return right(sentApologies.map((apology) {
         if (apology.reciever == null) {

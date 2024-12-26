@@ -6,6 +6,8 @@ import 'package:friends_forever_flutter/features/auth/presentation/bloc/bloc/aut
 import 'package:friends_forever_flutter/features/auth/presentation/pages/register_page.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../apologies/presentation/pages/apologies_page.dart';
+
 class LoginPage extends StatelessWidget {
   static String route() => '/login';
   final _emailController = TextEditingController();
@@ -23,7 +25,7 @@ class LoginPage extends StatelessWidget {
         }
 
         if (state is AuthSuccessState) {
-          log("Success");
+          context.go(ApologiesPage.route());
         }
       }, builder: (context, state) {
         return Center(

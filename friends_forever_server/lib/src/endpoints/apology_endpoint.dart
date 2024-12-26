@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:friends_forever_server/src/generated/protocol.dart';
 import 'package:friends_forever_server/src/utils/utils.dart';
 import 'package:serverpod/serverpod.dart';
+import 'package:serverpod_auth_server/serverpod_auth_server.dart';
 
 class ApologyEndpoint extends Endpoint {
   @override
@@ -101,6 +102,12 @@ class ApologyEndpoint extends Endpoint {
       final apologies = Apologies.db.find(
         session,
         where: (p0) => p0.recieverId.equals(user!.id),
+        include: Apologies.include(
+            sender: User.include(
+                userInfo: UserInfo.include(), inviteCode: InviteCode.include()),
+            reciever: User.include(
+                userInfo: UserInfo.include(),
+                inviteCode: InviteCode.include())),
       );
       return apologies;
     } catch (e) {
@@ -117,6 +124,12 @@ class ApologyEndpoint extends Endpoint {
     try {
       final apologies = Apologies.db.find(
         session,
+        include: Apologies.include(
+            sender: User.include(
+                userInfo: UserInfo.include(), inviteCode: InviteCode.include()),
+            reciever: User.include(
+                userInfo: UserInfo.include(),
+                inviteCode: InviteCode.include())),
         where: (p0) => p0.senderId.equals(user!.id),
       );
       return apologies;
