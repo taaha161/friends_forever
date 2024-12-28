@@ -17,6 +17,13 @@ import 'package:friends_forever_flutter/features/auth/domain/usecases/login.dart
 import 'package:friends_forever_flutter/features/auth/domain/usecases/logout.dart';
 import 'package:friends_forever_flutter/features/auth/domain/usecases/register_user.dart';
 import 'package:friends_forever_flutter/features/auth/presentation/bloc/bloc/auth_bloc.dart';
+import 'package:friends_forever_flutter/features/friends/data/datasources/friend_data_source.dart';
+import 'package:friends_forever_flutter/features/friends/data/repository/friend_repo_impl.dart';
+import 'package:friends_forever_flutter/features/friends/domain/repository/friend_repository.dart';
+import 'package:friends_forever_flutter/features/friends/domain/usecases/add_friend_usecase.dart';
+import 'package:friends_forever_flutter/features/friends/domain/usecases/get_friends_usecase.dart';
+import 'package:friends_forever_flutter/features/friends/domain/usecases/remove_friend_usecase.dart';
+import 'package:friends_forever_flutter/features/friends/presentation/bloc/friends_bloc.dart';
 import 'package:friends_forever_flutter/features/user/presentation/cubit/user_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart';
@@ -53,6 +60,10 @@ _initAuthDependencies() {
       client: serviceLocator<Client>(),
       sessionManager: serviceLocator<SessionManager>()));
 
+  serviceLocator.registerFactory<FriendDataSource>(() => FriendDataSourceImpl(
+      client: serviceLocator<Client>(),
+      sessionManager: serviceLocator<SessionManager>()));
+
   //  Repository
   serviceLocator.registerFactory<AuthRepository>(
     () => AuthRepositoryImpl(
@@ -61,6 +72,9 @@ _initAuthDependencies() {
   );
   serviceLocator.registerFactory<ApologyRepository>(() => ApologyRepositoryImpl(
         dataSource: serviceLocator<ApologyDataSource>(),
+      ));
+  serviceLocator.registerFactory<FriendRepository>(() => FriendRepoImpl(
+        dataSource: serviceLocator<FriendDataSource>(),
       ));
 
   // Use Cases
@@ -110,6 +124,13 @@ _initAuthDependencies() {
   serviceLocator.registerFactory<UpdateApologyUsecase>(
       () => UpdateApologyUsecase(serviceLocator<ApologyRepository>()));
 
+  serviceLocator.registerFactory<AddFriendUsecase>(
+      () => AddFriendUsecase(serviceLocator<FriendRepository>()));
+  serviceLocator.registerFactory<GetFriendsUsecase>(
+      () => GetFriendsUsecase(serviceLocator<FriendRepository>()));
+  serviceLocator.registerFactory<RemoveFriendUsecase>(
+      () => RemoveFriendUsecase(serviceLocator<FriendRepository>()));
+
   // Bloc
 
   serviceLocator.registerLazySingleton<AuthBloc>(
@@ -132,6 +153,14 @@ _initAuthDependencies() {
       sendApologyUsecase: serviceLocator<SendApologyUsecase>(),
       getApologyByIdUsecase: serviceLocator<GetApologyByIdUseCase>(),
       updateApologyUsecase: serviceLocator<UpdateApologyUsecase>(),
+    ),
+  );
+
+  serviceLocator.registerLazySingleton<FriendsBloc>(
+    () => FriendsBloc(
+      getFriendsUsecase: serviceLocator<GetFriendsUsecase>(),
+      addFriendUsecase: serviceLocator<AddFriendUsecase>(),
+      removeFriendUsecase: serviceLocator<RemoveFriendUsecase>(),
     ),
   );
 }

@@ -18,9 +18,9 @@ import 'package:friends_forever_server/src/generated/apology.dart' as _i4;
 import 'package:friends_forever_server/src/generated/apology_status.dart'
     as _i5;
 import 'package:friends_forever_server/src/generated/bump.dart' as _i6;
-import 'package:friends_forever_server/src/generated/friends.dart' as _i7;
-import 'package:friends_forever_server/src/generated/letter.dart' as _i8;
-import 'package:friends_forever_server/src/generated/user.dart' as _i9;
+import 'package:friends_forever_server/src/generated/user.dart' as _i7;
+import 'package:friends_forever_server/src/generated/friends.dart' as _i8;
+import 'package:friends_forever_server/src/generated/letter.dart' as _i9;
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i10;
 import 'package:friends_forever_server/src/generated/protocol.dart';
 import 'package:friends_forever_server/src/generated/endpoints.dart';
@@ -488,7 +488,7 @@ class _FriendsEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i3.Future<Map<String, String>> addFriend(
+  _i3.Future<_i7.User?> addFriend(
     _i1.TestSessionBuilder sessionBuilder,
     String inviteCode,
   ) async {
@@ -509,7 +509,7 @@ class _FriendsEndpoint {
         var _localReturnValue = await (_localCallContext.method.call(
           _localUniqueSession,
           _localCallContext.arguments,
-        ) as _i3.Future<Map<String, String>>);
+        ) as _i3.Future<_i7.User?>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -546,7 +546,7 @@ class _FriendsEndpoint {
     });
   }
 
-  _i3.Future<List<_i7.Friends>?> get(
+  _i3.Future<List<_i8.Friends>?> get(
     _i1.TestSessionBuilder sessionBuilder, {
     required int page,
   }) async {
@@ -567,7 +567,7 @@ class _FriendsEndpoint {
         var _localReturnValue = await (_localCallContext.method.call(
           _localUniqueSession,
           _localCallContext.arguments,
-        ) as _i3.Future<List<_i7.Friends>?>);
+        ) as _i3.Future<List<_i8.Friends>?>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -621,7 +621,7 @@ class _LetterEndpoint {
     });
   }
 
-  _i3.Future<_i8.Letters?> read(
+  _i3.Future<_i9.Letters?> read(
     _i1.TestSessionBuilder sessionBuilder,
     int id,
   ) async {
@@ -642,7 +642,7 @@ class _LetterEndpoint {
         var _localReturnValue = await (_localCallContext.method.call(
           _localUniqueSession,
           _localCallContext.arguments,
-        ) as _i3.Future<_i8.Letters?>);
+        ) as _i3.Future<_i9.Letters?>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -714,7 +714,7 @@ class _LetterEndpoint {
     });
   }
 
-  _i3.Future<List<_i8.Letters>> recieved(
+  _i3.Future<List<_i9.Letters>> recieved(
       _i1.TestSessionBuilder sessionBuilder) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
@@ -733,7 +733,7 @@ class _LetterEndpoint {
         var _localReturnValue = await (_localCallContext.method.call(
           _localUniqueSession,
           _localCallContext.arguments,
-        ) as _i3.Future<List<_i8.Letters>>);
+        ) as _i3.Future<List<_i9.Letters>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -741,7 +741,7 @@ class _LetterEndpoint {
     });
   }
 
-  _i3.Future<List<_i8.Letters>> sent(
+  _i3.Future<List<_i9.Letters>> sent(
       _i1.TestSessionBuilder sessionBuilder) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
@@ -760,7 +760,7 @@ class _LetterEndpoint {
         var _localReturnValue = await (_localCallContext.method.call(
           _localUniqueSession,
           _localCallContext.arguments,
-        ) as _i3.Future<List<_i8.Letters>>);
+        ) as _i3.Future<List<_i9.Letters>>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -779,7 +779,7 @@ class _UserEndpoint {
 
   final _i2.SerializationManager _serializationManager;
 
-  _i3.Future<_i9.User?> get(_i1.TestSessionBuilder sessionBuilder) async {
+  _i3.Future<_i7.User?> get(_i1.TestSessionBuilder sessionBuilder) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
           (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
@@ -797,7 +797,7 @@ class _UserEndpoint {
         var _localReturnValue = await (_localCallContext.method.call(
           _localUniqueSession,
           _localCallContext.arguments,
-        ) as _i3.Future<_i9.User?>);
+        ) as _i3.Future<_i7.User?>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -805,7 +805,7 @@ class _UserEndpoint {
     });
   }
 
-  _i3.Future<_i9.User?> getUserById(
+  _i3.Future<_i7.User?> getUserById(
     _i1.TestSessionBuilder sessionBuilder,
     int id,
   ) async {
@@ -826,7 +826,7 @@ class _UserEndpoint {
         var _localReturnValue = await (_localCallContext.method.call(
           _localUniqueSession,
           _localCallContext.arguments,
-        ) as _i3.Future<_i9.User?>);
+        ) as _i3.Future<_i7.User?>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();
@@ -834,7 +834,7 @@ class _UserEndpoint {
     });
   }
 
-  _i3.Future<_i9.User?> verifyEmail(
+  _i3.Future<_i7.User?> verifyEmail(
     _i1.TestSessionBuilder sessionBuilder,
     _i10.UserInfo userInfo,
   ) async {
@@ -855,7 +855,7 @@ class _UserEndpoint {
         var _localReturnValue = await (_localCallContext.method.call(
           _localUniqueSession,
           _localCallContext.arguments,
-        ) as _i3.Future<_i9.User?>);
+        ) as _i3.Future<_i7.User?>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();

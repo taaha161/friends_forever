@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friends_forever_flutter/features/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:friends_forever_flutter/features/auth/presentation/pages/register_page.dart';
+import 'package:friends_forever_flutter/features/friends/presentation/pages/friends_page.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../apologies/presentation/pages/apologies_page.dart';
@@ -25,7 +26,7 @@ class LoginPage extends StatelessWidget {
         }
 
         if (state is AuthSuccessState) {
-          context.go(ApologiesPage.route());
+          context.go(FriendsPage.route());
         }
       }, builder: (context, state) {
         return Center(

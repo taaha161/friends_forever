@@ -14,30 +14,29 @@ class FriendsEndpoint extends Endpoint {
 
   /// Adds a friend based on the provided [inviteCode].
   /// Returns a success or error message in a map.
-  Future<Map<String, String>> addFriend(
-      Session session, String inviteCode) async {
+  Future<User?> addFriend(Session session, String inviteCode) async {
     final authenticatedUserId = await getAuthenticatedUserId(session);
     if (authenticatedUserId == null) {
-      return {"message": "Please log in first"};
+      return null;
     }
 
     final friendsPair =
         await _getFriendsPair(session, inviteCode, authenticatedUserId);
     if (friendsPair == null) {
-      return {"message": "Invalid invite code"};
+      return null;
     }
 
     final checkFriendship =
         await _checkExistingFriendship(session, friendsPair[0], friendsPair[1]);
     if (checkFriendship) {
-      return {"message": "You have already added this user "};
+      return null;
     }
 
     try {
       await _addFriendship(session, friendsPair[0], friendsPair[1]);
-      return {"message": "Friends added"};
+      return friendsPair[0];
     } catch (e) {
-      return {"message": e.toString()};
+      return null;
     }
   }
 
@@ -75,6 +74,10 @@ class FriendsEndpoint extends Endpoint {
         offset: (page - 1) * 10,
         limit: 10,
         include: Friends.include(
+            user: User.include(
+              userInfo: UserInfo.include(),
+              inviteCode: InviteCode.include(),
+            ),
             friend: User.include(
                 userInfo: UserInfo.include(),
                 inviteCode: InviteCode.include())));
@@ -86,6 +89,10 @@ class FriendsEndpoint extends Endpoint {
 Future<List<User>?> _getFriendsPair(
     Session session, String inviteCode, int authenticatedUserId) async {
   final friend = await User.db.findFirstRow(
+    include: User.include(
+      userInfo: UserInfo.include(),
+      inviteCode: InviteCode.include(),
+    ),
     session,
     where: (row) => row.inviteCode.code.equals(inviteCode),
   );

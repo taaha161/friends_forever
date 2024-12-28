@@ -14,9 +14,9 @@ import 'dart:async' as _i2;
 import 'package:friends_forever_client/src/protocol/apology.dart' as _i3;
 import 'package:friends_forever_client/src/protocol/apology_status.dart' as _i4;
 import 'package:friends_forever_client/src/protocol/bump.dart' as _i5;
-import 'package:friends_forever_client/src/protocol/friends.dart' as _i6;
-import 'package:friends_forever_client/src/protocol/letter.dart' as _i7;
-import 'package:friends_forever_client/src/protocol/user.dart' as _i8;
+import 'package:friends_forever_client/src/protocol/user.dart' as _i6;
+import 'package:friends_forever_client/src/protocol/friends.dart' as _i7;
+import 'package:friends_forever_client/src/protocol/letter.dart' as _i8;
 import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i9;
 import 'protocol.dart' as _i10;
 
@@ -142,8 +142,8 @@ class EndpointFriends extends _i1.EndpointRef {
   /// [page] is used for pagination.
   /// Adds a friend based on the provided [inviteCode].
   /// Returns a success or error message in a map.
-  _i2.Future<Map<String, String>> addFriend(String inviteCode) =>
-      caller.callServerEndpoint<Map<String, String>>(
+  _i2.Future<_i6.User?> addFriend(String inviteCode) =>
+      caller.callServerEndpoint<_i6.User?>(
         'friends',
         'addFriend',
         {'inviteCode': inviteCode},
@@ -156,8 +156,8 @@ class EndpointFriends extends _i1.EndpointRef {
         {'inviteCode': inviteCode},
       );
 
-  _i2.Future<List<_i6.Friends>?> get({required int page}) =>
-      caller.callServerEndpoint<List<_i6.Friends>?>(
+  _i2.Future<List<_i7.Friends>?> get({required int page}) =>
+      caller.callServerEndpoint<List<_i7.Friends>?>(
         'friends',
         'get',
         {'page': page},
@@ -186,8 +186,8 @@ class EndpointLetter extends _i1.EndpointRef {
         },
       );
 
-  _i2.Future<_i7.Letters?> read(int id) =>
-      caller.callServerEndpoint<_i7.Letters?>(
+  _i2.Future<_i8.Letters?> read(int id) =>
+      caller.callServerEndpoint<_i8.Letters?>(
         'letter',
         'read',
         {'id': id},
@@ -215,15 +215,15 @@ class EndpointLetter extends _i1.EndpointRef {
         {'id': id},
       );
 
-  _i2.Future<List<_i7.Letters>> recieved() =>
-      caller.callServerEndpoint<List<_i7.Letters>>(
+  _i2.Future<List<_i8.Letters>> recieved() =>
+      caller.callServerEndpoint<List<_i8.Letters>>(
         'letter',
         'recieved',
         {},
       );
 
-  _i2.Future<List<_i7.Letters>> sent() =>
-      caller.callServerEndpoint<List<_i7.Letters>>(
+  _i2.Future<List<_i8.Letters>> sent() =>
+      caller.callServerEndpoint<List<_i8.Letters>>(
         'letter',
         'sent',
         {},
@@ -239,21 +239,21 @@ class EndpointUser extends _i1.EndpointRef {
 
   /// Fetches the authenticated user and their details, including friends, invite codes, etc.
   /// [page] is used for pagination.
-  _i2.Future<_i8.User?> get() => caller.callServerEndpoint<_i8.User?>(
+  _i2.Future<_i6.User?> get() => caller.callServerEndpoint<_i6.User?>(
         'user',
         'get',
         {},
       );
 
-  _i2.Future<_i8.User?> getUserById(int id) =>
-      caller.callServerEndpoint<_i8.User?>(
+  _i2.Future<_i6.User?> getUserById(int id) =>
+      caller.callServerEndpoint<_i6.User?>(
         'user',
         'getUserById',
         {'id': id},
       );
 
-  _i2.Future<_i8.User?> verifyEmail(_i9.UserInfo userInfo) =>
-      caller.callServerEndpoint<_i8.User?>(
+  _i2.Future<_i6.User?> verifyEmail(_i9.UserInfo userInfo) =>
+      caller.callServerEndpoint<_i6.User?>(
         'user',
         'verifyEmail',
         {'userInfo': userInfo},

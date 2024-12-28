@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friends_forever_flutter/core/router/router.dart';
 import 'package:friends_forever_flutter/dependencies.dart';
 import 'package:friends_forever_flutter/features/apologies/presentation/bloc/apology_bloc.dart';
+import 'package:friends_forever_flutter/features/friends/presentation/bloc/friends_bloc.dart';
 import 'package:friends_forever_flutter/features/user/presentation/cubit/user_cubit.dart';
 
 import 'features/auth/presentation/bloc/bloc/auth_bloc.dart';
@@ -16,7 +17,8 @@ void main() async {
     BlocProvider(
       create: (_) => serviceLocator<AuthBloc>()..add(AuthCheckUserEvent()),
     ),
-    BlocProvider(create: (_) => serviceLocator<ApologyBloc>())
+    BlocProvider(create: (_) => serviceLocator<ApologyBloc>()),
+    BlocProvider(create: (_) => serviceLocator<FriendsBloc>())
   ], child: MyApp()));
 }
 

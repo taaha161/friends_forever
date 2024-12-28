@@ -3,6 +3,7 @@ import 'package:friends_forever_flutter/features/apologies/presentation/pages/ap
 import 'package:friends_forever_flutter/features/auth/presentation/pages/login_page.dart';
 import 'package:friends_forever_flutter/features/auth/presentation/pages/register_page.dart';
 import 'package:friends_forever_flutter/features/auth/presentation/pages/verify_email_page.dart';
+import 'package:friends_forever_flutter/features/friends/presentation/pages/friends_page.dart';
 import 'package:friends_forever_flutter/features/user/presentation/cubit/user_cubit.dart';
 import 'package:go_router/go_router.dart';
 
@@ -24,6 +25,10 @@ class CustomRouter {
         GoRoute(
             path: EmailVerificationPage.route(),
             builder: (context, _) => EmailVerificationPage()),
+        GoRoute(
+          path: FriendsPage.route(),
+          builder: (context, _) => FriendsPage(),
+        ),
       ],
       redirect: (context, state) {
         final userState = context.read<UserCubit>().state;

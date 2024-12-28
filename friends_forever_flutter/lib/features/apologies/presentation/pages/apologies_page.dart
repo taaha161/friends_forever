@@ -38,6 +38,7 @@ class _ApologiesPageState extends State<ApologiesPage>
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
         onPressed: () {
           showDialog(
             context: context,
