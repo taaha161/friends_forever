@@ -45,7 +45,7 @@ class FriendsBloc extends Bloc<FriendsEvent, FriendsState> {
 
   _addFriends(FriendAddedEvent event, emit) async {
     FriendsLoaded? currState;
-    if (event is FriendsLoaded) {
+    if (state is FriendsLoaded) {
       currState = state as FriendsLoaded;
     }
     emit(FriendsLoading());
@@ -59,15 +59,17 @@ class FriendsBloc extends Bloc<FriendsEvent, FriendsState> {
         currFriends.add(r);
         currState.copyWith(currFriends);
         emit(currState);
+        return;
       } else {
         emit(FriendsLoaded([r]));
+        return;
       }
     });
   }
 
   _removeFriend(FriendRemovedEvent event, emit) async {
     FriendsLoaded? currState;
-    if (event is FriendsLoaded) {
+    if (state is FriendsLoaded) {
       currState = state as FriendsLoaded;
     }
     emit(FriendsLoading());
@@ -82,8 +84,10 @@ class FriendsBloc extends Bloc<FriendsEvent, FriendsState> {
         log(currFriends.toString());
         currState.copyWith(currFriends);
         emit(currState);
+        return;
       } else {
         emit(FriendsLoaded([]));
+        return;
       }
     });
   }

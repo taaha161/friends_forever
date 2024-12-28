@@ -21,10 +21,46 @@ class _FriendsPageState extends State<FriendsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            context.read<FriendsBloc>().add(FriendAddedEvent("bbsde"));
-          },
-          child: Icon(Icons.add)),
+        child: Icon(Icons.add),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              final inviteCodeController = TextEditingController();
+
+              return AlertDialog(
+                title: Text('Add Friend'),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      controller: inviteCodeController,
+                      decoration: InputDecoration(hintText: 'Invite Code'),
+                    ),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Cancel'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      context
+                          .read<FriendsBloc>()
+                          .add(FriendAddedEvent(inviteCodeController.text));
+                      Navigator.pop(context);
+                    },
+                    child: Text('Add'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      ),
       appBar: AppBar(
         title: Text('Friends List'),
       ),
